@@ -1,6 +1,6 @@
 package br.senai.aula.web.infrastructure.persistence.game.entity;
 
-import jakarta.persistence.Column;
+import br.senai.aula.web.infrastructure.persistence.user.entity.UserJpaEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -11,26 +11,31 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "round")
-public class RoundJpaEntity {
+@Table(name = "players")
+public class PlayersJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Integer number;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserJpaEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "game_id", nullable = false)
     private GameJpaEntity game;
 
-    protected RoundJpaEntity() {
+    protected PlayersJpaEntity() {
     }
 
-    public RoundJpaEntity(Long id, Integer number, GameJpaEntity game) {
+    public PlayersJpaEntity(
+            Long id,
+            UserJpaEntity user,
+            GameJpaEntity game
+    ) {
         this.id = id;
-        this.number = number;
+        this.user = user;
         this.game = game;
     }
 
@@ -38,8 +43,8 @@ public class RoundJpaEntity {
         return id;
     }
 
-    public Integer getNumber() {
-        return number;
+    public UserJpaEntity getUser() {
+        return user;
     }
 
     public GameJpaEntity getGame() {
