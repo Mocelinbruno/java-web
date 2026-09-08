@@ -1,4 +1,4 @@
-package br.senai.aula.web.application.port.in;
+package br.senai.aula.web.application.port.in.skill;
 
 
 import br.senai.aula.web.domain.skills.Skills;
